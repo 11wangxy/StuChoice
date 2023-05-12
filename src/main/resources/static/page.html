@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>前端接口</title>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 0;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1565c0;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 20px;
+        }
+
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<h1>前端接口</h1>
+<div id="app">
+    <p>
+        <input type="text" v-model="count" placeholder="请输入学生的数量的值(n>0)">
+        <button @click="save">插入数据条数(原数据会被覆盖)</button>
+    </p>
+    <p>
+        <button @click="getStuTByT">查询让老师请吃饭的学生</button>
+    <table>
+        <tr v-for="item in stuTByT" :key="item">
+            <td>{{ item }}</td>
+        </tr>
+    </table>
+    </p>
+    <p>
+        <button @click="getStuTByS">查询让学生请吃饭的学生</button>
+    <table>
+        <tr v-for="item in stuTByS" :key="item">
+            <td>{{ item }}</td>
+        </tr>
+    </table>
+    </p>
+    <p>
+        <button @click="getStuTT">查询请老师吃饭的学生</button>
+    <table>
+        <tr v-for="item in stuTT" :key="item">
+            <td>{{ item }}</td>
+        </tr>
+    </table>
+    </p>
+    <p>
+        <button @click="getStuTS">查询请学生吃饭的学生</button>
+    <table>
+        <tr v-for="item in stuTS" :key="item">
+            <td>{{ item }}</td>
+        </tr>
+    </table>
+    </p>
+    <p>
+        <button @click="getStatus">查询上课的学生个数</button>
+    <table>
+        <tr v-for="item in status" :key="item">
+            <td>{{ item }}</td>
+        </tr>
+    </table>
+    </p>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                stuTByT: [],
+                stuTByS: [],
+                stuTT: [],
+                stuTS: [],
+                status: [],
+            };
+        },
+        methods: {
+            async save() {
+                let confirm = window.confirm("正准备进行删除和插入数据，请勿操作，确定要继续吗？");
+                if (confirm) {
+                    try {
+                        const response = await fetch(`/save/${this.count}`, { // 在请求 URL 中添加学生数量的值
+                            method: "POST",
+                        });
+                        if (response.ok) {
+                            alert("删除并插入数据成功");
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        alert("网络请求失败，请稍后再试！");
+                    }
+                }
+            },
+            async getStuTByT() {
+                const response = await fetch("/tbt");
+                const result = await response.json();
+                this.stuTByT = result.data;
+            },
+            async getStuTByS() {
+                const response = await fetch("/tbs");
+                const result = await response.json();
+                this.stuTByS = result.data;
+            },
+            async getStuTT() {
+                const response = await fetch("/tt");
+                const result = await response.json();
+                this.stuTT = result.data;
+            },
+            async getStuTS() {
+                const response = await fetch("/ts");
+                const result = await response.json();
+                this.stuTS = result.data;
+            },
+            async getStatus() {
+                const response = await fetch("/status");
+                const result = await response.json();
+                this.status = result.data;
+            },
+        },
+    });
+    app.mount("#app");
+</script>
+</body>
+</html>

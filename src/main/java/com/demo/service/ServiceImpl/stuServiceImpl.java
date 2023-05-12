@@ -22,6 +22,7 @@ public class stuServiceImpl implements StudentService {
     private static final String HAVE = "\n共有";
     private static final String STUDENT = "位学生";
     private static final String LISTEN = "听课";
+    private static final String BLANK="  ";
     @Resource
     private stuChoice stuChoice;
     @Resource
@@ -33,9 +34,9 @@ public class stuServiceImpl implements StudentService {
     }
 
     @Override
-    public void insert() {
+    public void insert(Integer count) {
         studentDTO dto = new studentDTO();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < count; i++) {
             double random = Math.random();
             if (random < 0.45) {
                 BeanUtils.copyProperties(stuChoice.newBadStudent(), dto);
@@ -49,44 +50,43 @@ public class stuServiceImpl implements StudentService {
     }
 
     public List<String> collect(List<studentDTO> list) {
-        return list.stream().map(student -> student.getNumber() + student.getName() + student.getStatus()
-                + student.getAction1() + student.getAction2()).collect(Collectors.toList());
+        return list.stream().map(student -> student.getNumber() +BLANK+ student.getName() +BLANK+ student.getStatus()+BLANK
+                + student.getAction1() +BLANK+ student.getAction2()).collect(Collectors.toList());
     }
 
     @Override
     public List<String> treatByS() {
         List<String> collect = collect(studentMapper.selectA1(TREAT_BY_STUDENT));
-        collect.add(HAVE + studentMapper.count1(TREAT_BY_STUDENT) + STUDENT + TREAT_BY_STUDENT);
+        collect.add(0,HAVE + studentMapper.count1(TREAT_BY_STUDENT) + STUDENT + TREAT_BY_STUDENT);
         return collect;
     }
 
     @Override
     public List<String> treatByT() {
         List<String> collect = collect(studentMapper.selectA2(TREAT_BY_TEACHER));
-        collect.add(HAVE + studentMapper.count2(TREAT_BY_TEACHER) + STUDENT + TREAT_BY_TEACHER);
+        collect.add(0,HAVE + studentMapper.count2(TREAT_BY_TEACHER) + STUDENT + TREAT_BY_TEACHER);
         return collect;
     }
 
     @Override
     public List<String> treatS() {
         List<String> collect = collect(studentMapper.selectA1(TREAT_STUDENT));
-        collect.add(HAVE + studentMapper.count1(TREAT_STUDENT) + STUDENT + TREAT_STUDENT);
+        collect.add(0,HAVE + studentMapper.count1(TREAT_STUDENT) + STUDENT + TREAT_STUDENT);
         return collect;
     }
 
     @Override
     public List<String> treatT() {
-        List<String> collect = collect(studentMapper.selectA1(TREAT_TEACHER));
-        collect.add(HAVE + studentMapper.count2(TREAT_TEACHER) + STUDENT + TREAT_TEACHER);
+        List<String> collect = collect(studentMapper.selectA2(TREAT_TEACHER));
+        collect.add(0,HAVE + studentMapper.count2(TREAT_TEACHER) + STUDENT + TREAT_TEACHER);
         return collect;
     }
 
     @Override
     public List<String> lacture() {
         List<String> collect = collect(studentMapper.selectS(LISTEN));
-        collect.add(HAVE + studentMapper.countStatus(LISTEN) + STUDENT + LISTEN);
+        collect.add(0,HAVE + studentMapper.countStatus(LISTEN) + STUDENT + LISTEN);
         return collect;
     }
-
 }
 

@@ -25,8 +25,10 @@ public class stuChoice {
         double random2 = Math.random();
         if (random1 <= 0.45) {
             badStudent.setAction1(badStudent.treatByStudent());
+            badStudent.setAction2("");
         }
         if (random1 > 0.45 && random1 <= 0.8) {
+            badStudent.setAction1("");
             badStudent.setAction2(badStudent.treatByTeacher());
         }
         if (random1 > 0.8) {
@@ -45,9 +47,11 @@ public class stuChoice {
         double random1 = Math.random();
         double random2 = Math.random();
         if (random1 <= 0.5) {
+            goodStudent.setAction2("");
             goodStudent.setAction1(goodStudent.treatStudent());
         }
         if (random1 > 0.5 && random1 <= 0.8) {
+            goodStudent.setAction1("");
             goodStudent.setAction2(goodStudent.treatTeacher());
         }
         if (random1 > 0.8) {

@@ -5,6 +5,7 @@ import com.demo.service.StudentService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,11 +19,15 @@ public class StuController {
     private StudentService studentService;
 
 
-    @PostMapping("/save")
-    public void saveStu() {
+    @PostMapping("/save/{count}")
+    public Result<String> saveStu(@PathVariable Integer count) {
+        if (count == null) { // 如果 count 为空
+            return Result.error("学生数量的值不能为空");
+        }
         studentService.deleteData();
         log.info("删除数据成功");
-        studentService.insert();
+        studentService.insert(count);
+        return Result.success("插入数据成功");
     }
 
     @GetMapping("/tbt")

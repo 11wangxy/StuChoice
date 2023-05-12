@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static com.demo.utils.StudentPatterns.STATUS;
+import static com.demo.utils.StudentPatterns.TREAT_BY_STUDENT;
 
 
 @SpringBootTest
@@ -41,5 +42,10 @@ public class nameTest {
     public void test2() {
         List<String> list = studentService.treatByS();
         System.out.println(list);
+    }
+    @Test
+    public void test3(){
+        List<studentDTO> list = studentMapper.selectA1(TREAT_BY_STUDENT);
+
     }
 }
