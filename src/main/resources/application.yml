@@ -18,13 +18,6 @@ spring:
     global-config:
       db-config:
         id-type: ASSIGN_ID
-  #阿里云oss
-  aliyun:
-    oss:
-      endpoint: "https://oss-cn-hangzhou.aliyuncs.com"
-      accessKeyId: "LTAI5t9XJ494wcipCfhm9ukC"
-      accessKeySecret: "rKLkFj9KCciMrKy9tS8L4JwYqfemur"
-      bucketName: "redish"
   #spring事务管理日志
   logging:
     level:
