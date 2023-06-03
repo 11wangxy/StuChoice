@@ -26,8 +26,8 @@ public class StuController {
         }
         studentService.deleteData();
         log.info("删除数据成功");
-        studentService.insert(count);
-        return Result.success("插入数据成功");
+        String s = studentService.insert(count);
+        return Result.success(s);
     }
 
     @GetMapping("/tbt")

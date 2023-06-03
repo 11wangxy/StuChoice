@@ -10,15 +10,15 @@ spring:
     url: jdbc:mysql://rm-cn-nwy37l2be0007q6o.rwlb.rds.aliyuncs.com:3306/test01
     username: test01
     password: Ckw-030709
-  #mybatis日志文件配置
-  mybatis:
-    configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-      map-underscore-to-camel-case: true
-    global-config:
-      db-config:
-        id-type: ASSIGN_ID
   #spring事务管理日志
   logging:
     level:
       org.springframework.jdbc.support.JdbcTransactionManager: debug
+#mybatis日志文件配置
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.StudentMapper">
+    <!-- StudentMapper.xml -->
+    <insert id="insertStudent" parameterType="java.util.List">
+        insert into test01.student(name,number,status,action1,action2) values
+        <foreach collection="list" item="item"  index="index" separator=",">
+            (#{item.name}, #{item.number}, #{item.status}, #{item.action1}, #{item.action2})
+        </foreach>
+    </insert>
+</mapper>

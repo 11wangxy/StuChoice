@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,35 +37,25 @@ public class stuServiceImpl implements StudentService {
     }
 
     @Override
-    public void insert(Integer count) {
+    public String insert(Integer count) {
         long startTime = System.nanoTime();    // 记录开始时间
-        ExecutorService executorService = Executors.newFixedThreadPool(20); // 创建固定大小的线程池
+        List<studentDTO> studentsDto = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            final int index = i;
-            executorService.execute(() -> {
-                double random = Math.random();
-                studentDTO dto = new studentDTO();
-                if (random < 0.45) {
-                    BeanUtils.copyProperties(stuChoice.newBadStudent(), dto);
-                    studentMapper.insertStudent(dto);
-                } else {
-                    BeanUtils.copyProperties(stuChoice.newGoodStudent(), dto);
-                    studentMapper.insertStudent(dto);
-                }
-                if (index % 500 == 0) {
-                    log.info("插入第{}条数据成功", index);
-                }
-                long endTime = System.nanoTime();      // 记录结束时间
-                long duration = endTime - startTime;   // 计算程序执行时间，单位为纳秒
-                double durationInMs = duration / 1e6;  // 将纳秒转换为毫秒
-                System.out.println("程序执行时间：" + durationInMs + " 毫秒");
-            });
+            studentDTO stuDto = new studentDTO();
+            double random = Math.random();
+            if (random < 0.45) {
+                BeanUtils.copyProperties(stuChoice.newBadStudent(), stuDto);
+                studentsDto.add(stuDto);
+            } else {
+                BeanUtils.copyProperties(stuChoice.newGoodStudent(), stuDto);
+                studentsDto.add(stuDto);
+            }
         }
-        executorService.shutdown(); // 关闭线程池
-        while (!executorService.isTerminated()) {
-            // 等待所有任务执行完毕
-        }
-        log.info("插入数据成功");
+        studentMapper.insertStudent(studentsDto);
+        long endTime = System.nanoTime();      // 记录结束时间
+        long duration = endTime - startTime;   // 计算程序执行时间，单位为纳秒
+        double durationInMs = duration / 1e6;  // 将纳秒转换为毫秒
+        return ("新增数据成功，" + "程序执行时间：" + durationInMs + " 毫秒");
     }
 
     public List<String> collect(List<studentDTO> list) {

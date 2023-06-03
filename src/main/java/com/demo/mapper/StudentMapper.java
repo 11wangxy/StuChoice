@@ -1,10 +1,7 @@
 package com.demo.mapper;
 
 import com.demo.entity.studentDTO;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -13,8 +10,7 @@ public interface StudentMapper {
     @Delete("delete from test01.student")
     void deleteTable();
 
-    @Insert("insert into test01.student(name,number,status,action1,action2)value(#{name},#{number},#{status},#{action1},#{action2}) ")
-    void insertStudent(studentDTO badStu);
+    void insertStudent(@Param("list") List<studentDTO> studentsDto);
 
     @Select("select * from test01.student where action1 = #{action1}")
     List<studentDTO> selectA1(String action1);

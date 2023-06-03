@@ -6,7 +6,7 @@ public interface StudentService {
 
     void deleteData();
 
-    void insert(Integer count);
+    String insert(Integer count);
 
     List<String> treatByT();
 
