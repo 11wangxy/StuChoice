@@ -11,7 +11,7 @@ spring:
     username: test01
     password: Ckw-030709
   #mybatis日志文件配置
-  mybatis-plus:
+  mybatis:
     configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
       map-underscore-to-camel-case: true
