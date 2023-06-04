@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 学生信息处理web交互接口
+ * @author Wang Xiaoyi
+ */
+
 @RestController
 @Slf4j
 public class StuController {

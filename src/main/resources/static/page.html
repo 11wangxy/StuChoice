@@ -56,6 +56,8 @@
         }
     </style>
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
 <h1>前端查询接口</h1>
@@ -115,41 +117,41 @@
                 stuTT: [],
                 stuTS: [],
                 status: [],
-                time: []
+                time: [],
             };
         },
         methods: {
             async save() {
                 // 判断输入的值是否为数字
                 if (isNaN(parseInt(this.count))) {
-                    alert('请输入数字！');
+                    alert("请输入数字！");
                     return;
                 }
                 // 判断输入的值是否在范围内
                 const ranges = [
-                    {min: 0, max: 100, estimatedTime: '10s'},
-                    {min: 100, max: 500, estimatedTime: '30s'},
-                    {min: 500, max: 1000, estimatedTime: '1min'},
-                    {min: 1000, max: 20000, estimatedTime: '5min'},
-                    {min: 20000, max: Infinity, estimatedTime: '30min'},
+                    { min: 0, max: 100, estimatedTime: "10s" },
+                    { min: 100, max: 500, estimatedTime: "30s" },
+                    { min: 500, max: 1000, estimatedTime: "1min" },
+                    { min: 1000, max: 20000, estimatedTime: "5min" },
+                    { min: 20000, max: Infinity, estimatedTime: "30min" },
                 ];
                 const num = parseInt(this.count);
                 const range = ranges.find((r) => num > r.min && num <= r.max);
                 if (!range) {
-                    alert('请输入的数字处于区间0~200000！');
+                    alert("请输入的数字处于区间0~200000！");
                     return;
                 }
-                const {estimatedTime} = range;
-                this.confirm = window.confirm(`正准备进行删除和插入数据，预计${estimatedTime}内，中途请勿重新提交操作，确定要继续吗？`);
+                const { estimatedTime } = range;
+                this.confirm = window.confirm(
+                    `正准备进行删除和插入数据，预计${estimatedTime}内，中途请勿重新提交操作，确定要继续吗？`
+                );
                 if (confirm) {
                     try {
-                        const response = await fetch(`/save/${this.count}`, { // 在请求 URL 中添加学生数量的值
-                            method: "POST",
-                        });
-                        if (response.ok) {
-                            const result = await response.json();
-                            if (result.code === 0){
-                                alert("请求失败，请稍后再试！")
+                        const response = await axios.post(`/save/${this.count}`);
+                        if (response.status === 200) {
+                            const result = response.data;
+                            if (result.code === 0) {
+                                alert(result.msg);
                                 return;
                             }
                             this.time = result.data;
@@ -162,49 +164,71 @@
                 }
             },
             async getStuTByT() {
-                const response = await fetch("/tbt");
-                const result = await response.json();
-                if (result.code === 0){
-                    alert("请求失败，请稍后再试！")
-                    return;
+                try {
+                    const response = await axios.get("/tbt");
+                    const result = response.data;
+                    this.stuTByT = result.data;
+                } catch (error) {
+                    console.error(error);
+                    alert("请求失败，请稍后再试！");
                 }
-                this.stuTByT = result.data;
             },
+
             async getStuTByS() {
-                const response = await fetch("/tbs");
-                const result = await response.json();
-                if (result.code === 0){
-                    alert("请求失败，请稍后再试！")
-                    return;
+                try {
+                    const response = await axios.get("/tbs");
+                    const result = response.data;
+                    if (result.code === 0) {
+                        alert(result.msg);
+                        return;
+                    }
+                    this.stuTByS = result.data;
+                } catch (error) {
+                    console.error(error);
+                    alert("请求失败，请稍后再试！");
                 }
-                this.stuTByS = result.data;
             },
             async getStuTT() {
-                const response = await fetch("/tt");
-                const result = await response.json();
-                if (result.code === 0){
-                    alert("请求失败，请稍后再试！")
-                    return;
+                try {
+                    const response = await axios.get("/tt");
+                    const result = response.data;
+                    if (result.code === 0) {
+                        alert(result.msg);
+                        return;
+                    }
+                    this.stuTT = result.data;
+                } catch (error) {
+                    console.error(error);
+                    alert("请求失败，请稍后再试！");
                 }
-                this.stuTT = result.data;
             },
             async getStuTS() {
-                const response = await fetch("/ts");
-                const result = await response.json();
-                if (result.code === 0){
-                    alert("请求失败，请稍后再试！")
-                    return;
+                try {
+                    const response = await axios.get("/ts");
+                    const result = response.data;
+                    if (result.code === 0) {
+                        alert(result.msg);
+                        return;
+                    }
+                    this.stuTS = result.data;
+                } catch (error) {
+                    console.error(error);
+                    alert("请求失败，请稍后再试！");
                 }
-                this.stuTS = result.data;
             },
             async getStatus() {
-                const response = await fetch("/status");
-                const result = await response.json();
-                if (result.code === 0){
-                    alert("请求失败，请稍后再试！")
-                    return;
+                try {
+                    const response = await axios.get("/status");
+                    const result = response.data;
+                    if (result.code === 0) {
+                        alert(result.msg);
+                        return;
+                    }
+                    this.status = result.data;
+                } catch (error) {
+                    console.error(error);
+                    alert("请求失败，请稍后再试！");
                 }
-                this.status = result.data;
             },
         },
     });

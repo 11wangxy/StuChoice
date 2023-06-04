@@ -2,6 +2,9 @@ package com.demo.service;
 
 import java.util.List;
 
+/**
+ * 定义接口方法
+ */
 public interface StudentService {
 
     void deleteData();

@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
+/**
+ * @author Wang Xiaoyi
+ * 定义一个方法来生成学生的信息
+ */
 @Component
 public class NEWStudent {
     public Student newStudent() {
