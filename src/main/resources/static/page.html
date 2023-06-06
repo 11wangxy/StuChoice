@@ -166,6 +166,10 @@
                 try {
                     const response = await axios.get("/tbt");
                     const result = response.data;
+                    if (result.code === 0) {
+                        alert(result.msg);
+                        return;
+                    }
                     this.stuTByT = result.data;
                 } catch (error) {
                     console.error(error);
