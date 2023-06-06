@@ -24,22 +24,21 @@ public class stuChoice {
 
     public badStudent newBadStudent() {
         Student student = newStudent.newStudent();
-        BeanUtils.copyProperties(student, badStudent); // 将student的属性复制到badStu中
+        BeanUtils.copyProperties(student, badStudent);
         double random1 = Math.random();
         double random2 = Math.random();
-        if (random1 <= 0.45) {
-            badStudent.setAction1(badStudent.treatByStudent());
-            badStudent.setAction2("");
+        badStudent.setAction2("").setAction1("");
+        if (random1 <= 0.3) {
+            badStudent.treatByStudent();
         }
-        if (random1 > 0.45 && random1 <= 0.8) {
-            badStudent.setAction1("");
-            badStudent.setAction2(badStudent.treatByTeacher());
+        if (random1 > 0.5 && random1 <= 0.8) {
+            badStudent.treatByTeacher();
         }
         if (random1 > 0.8) {
-            badStudent.setAction1(badStudent.treatByStudent());
-            badStudent.setAction2(badStudent.treatByTeacher());
+            badStudent.treatByStudent();
+            badStudent.treatByTeacher();
         }
-        if (random2 > 0.4) {
+        if (random2 > 0.5) {
             badStudent.setStatus("不听课");
         }
         return badStudent;
@@ -50,19 +49,20 @@ public class stuChoice {
         BeanUtils.copyProperties(student, goodStudent);
         double random1 = Math.random();
         double random2 = Math.random();
+        goodStudent.setAction2(" ").setAction1("");
         if (random1 <= 0.5) {
-            goodStudent.setAction2("");
-            goodStudent.setAction1(goodStudent.treatStudent());
+            goodStudent.setAction2(" ");
+            goodStudent.treatStudent();
         }
         if (random1 > 0.5 && random1 <= 0.8) {
-            goodStudent.setAction1("");
-            goodStudent.setAction2(goodStudent.treatTeacher());
+            goodStudent.setAction1(" ");
+            goodStudent.treatTeacher();
         }
         if (random1 > 0.8) {
-            goodStudent.setAction2(goodStudent.treatTeacher());
-            goodStudent.setAction1(goodStudent.treatStudent());
+            goodStudent.treatTeacher();
+            goodStudent.treatStudent();
         }
-        if (random2 > 0.8) {
+        if (random2 > 0.85) {
             badStudent.setStatus("不听课");
         }
         return goodStudent;

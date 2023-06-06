@@ -1,7 +1,7 @@
 package com.demo.entity;
 
 public interface goodStu {
-    String treatTeacher();
+    void treatTeacher();
 
-    String treatStudent();
+    void treatStudent();
 }

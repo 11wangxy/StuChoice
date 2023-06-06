@@ -67,7 +67,7 @@ public class stuServiceImpl implements StudentService {
         long endTime = System.nanoTime();      // 记录结束时间
         long duration = endTime - startTime;   // 计算程序执行时间，单位为纳秒
         double durationInMs = duration / 1e6;  // 将纳秒转换为毫秒
-        return ("新增数据成功，" + "程序执行时间：" + durationInMs + " 毫秒");
+        return ("新增数据成功，程序执行时间：" + durationInMs + " 毫秒");
     }
 
     /**
