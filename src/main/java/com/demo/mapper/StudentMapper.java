@@ -15,7 +15,7 @@ public interface StudentMapper {
     @Select("select * from test01.student where action1 = #{action1}")
     List<studentDTO> selectA1(String action1);
 
-    @Select("select * from test01.student where action0 = #{action2}")
+    @Select("select * from test01.student where action2 = #{action2}")
     List<studentDTO> selectA2(String action2);
 
     @Select("select * from test01.student where status = #{status} ")

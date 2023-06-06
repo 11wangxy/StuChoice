@@ -129,11 +129,10 @@
                 }
                 // 判断输入的值是否在范围内
                 const ranges = [
-                    { min: 0, max: 100, estimatedTime: "10s" },
-                    { min: 100, max: 500, estimatedTime: "30s" },
-                    { min: 500, max: 1000, estimatedTime: "1min" },
-                    { min: 1000, max: 20000, estimatedTime: "5min" },
-                    { min: 20000, max: Infinity, estimatedTime: "30min" },
+                    { min: 0, max: 1000, estimatedTime: "10s" },
+                    { min: 1000, max: 10000, estimatedTime: "30s" },
+                    { min: 10000, max: 100000, estimatedTime: "1min" },
+                    { min: 100000, max: 10000000, estimatedTime: "5min" },
                 ];
                 const num = parseInt(this.count);
                 const range = ranges.find((r) => num > r.min && num <= r.max);
